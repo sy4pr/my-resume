@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마케터 수연 - 포트폴리오</title>
+    <!-- 세련된 기본 폰트(Pretendard) 적용 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        /* === 전체적인 색상 테마 및 디자인 뼈대 세팅 === */
+        :root {
+            /* 밀리의 서재를 연상케 하는 옐로우 & 다크 테마 */
+            --primary-color: #ffeb00; 
+            --bg-color: #121212; 
+            --text-color: #f1f1f1;
+            --secondary-bg: #1e1e1e;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+
+        /* 1. 첫 화면 (대문 섹션) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            color: #aaaaaa;
+            margin-bottom: 40px;
+        }
+
+        /* 버튼 규격 */
+        .btn {
+            padding: 15px 30px;
+            background-color: var(--primary-color);
+            color: #121212;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 5px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background-color: #fff;
+        }
+
+        /* 공통 섹션 규격 */
+        section {
+            padding: 100px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            font-weight: 700;
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        /* 2. 자기소개 섹션 */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        /* 3. 경력 기술 섹션 */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .experience-card {
+            background-color: var(--secondary-bg);
+            padding: 40px;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .role-date {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .project-list {
+            padding-left: 20px;
+            color: #ccc;
+        }
+
+        .project-list li {
+            margin-bottom: 10px;
+        }
+
+        /* 이미지 placeholder 박스 (추후 실제 이미지로 교체) */
+        .img-placeholder {
+            width: 100px; 
+            height: 100px; 
+            background-color: #333; 
+            border-radius: 8px; 
+            font-size: 0.8rem; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            color: #888; 
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            background-color: #0a0a0a;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .about-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 첫 화면 (대문) -->
+    <header class="hero">
+        <h1>아이디어를 <span>실현</span>하는<br>하이브리드 마케터</h1>
+        <p>프로젝트 매니지먼트 역량과 출판 생태계에 대한 이해도로 오리지널 종이책 트래픽을 극대화합니다.</p>
+        <a href="#experience" class="btn">포트폴리오 보기</a>
+    </header>
+
+    <!-- 지원동기 & 자기소개 -->
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <h3 style="color: var(--primary-color);">전방의 세일즈를 돕는<br>가장 강력하고 든든한 후방 지원군</h3>
+                <p>대규모 공공기관과 정책 홍보 대행사에서 프로젝트 매니저로 일하며 '대중의 마음을 움직이는 캠페인'을 기획해 왔습니다.</p>
+                <p>관습을 따르지 않고 전체적인 판을 짜는 거시적 기획력과, 외부 인플루언서 및 유관부서를 조율하는 탄탄한 커뮤니케이션 능력을 갖추었습니다. 영업 및 세일즈 부서가 서점 현장에서 자신 있게 책을 세일즈할 수 있도록 '압도적인 홍보 이슈'와 '바이럴 무기'를 쥐여드리겠습니다.</p>
+            </div>
+            <!-- 내 사진 들어갈 곳 -->
+            <div style="background-color: #333; height: 350px; border-radius: 12px; display: flex; justify-content: center; align-items: center; color: #666; font-style: italic;">
+                [프로필 사진 교체 예정]
+            </div>
+        </div>
+    </section>
+
+    <!-- 주요 경력/프로젝트 -->
+    <section id="experience">
+        <h2 class="section-title">Work Experience</h2>
+        <div class="timeline">
+            
+            <!-- 경력 1 -->
+            <div class="experience-card">
+                <div class="company-name">비즈니스북스</div>
+                <div class="role-date">홍보팀 팀장 / 2023.06 - 현재</div>
+                <ul class="project-list">
+                    <li><strong>&lt;렛뎀 이론&gt; 런칭 오가닉 바이럴:</strong> 국내 인지도가 낮던 저자 유명세에 의존하지 않고, 시대적 메시지를 포착하여 자체 숏폼 번역/제작 및 인플루언서(미키피디아, 딤디 등) 섭외. 광고비 집행 없이 약 6,000명의 폭발적인 오가닉 노출 리드.</li>
+                    <li><strong>신규 채널(X) 적극 도입:</strong> 사내에서 회의적이었던 X(구 트위터) 채널 시딩을 밀어붙여, 현재 회사 핵심 마케팅 파이프라인으로 정착시킴.</li>
+                    <li><strong>홍보팀 조직 매니징:</strong> 잦은 인력 변동 속에서도 팀원들을 이끌며 세일즈에 흔들림 없이 기여.</li>
+                </ul>
+                <!-- 사진 넣을 빈 공간 -->
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <div class="img-placeholder">[렛뎀이론<br>이미지 1]</div>
+                    <div class="img-placeholder">[렛뎀이론<br>이미지 2]</div>
+                </div>
+            </div>
+
+            <!-- 경력 2 -->
+            <div class="experience-card">
+                <div class="company-name">유브레인커뮤니케이션즈</div>
+                <div class="role-date">Solution U 디렉터 / 2019.01 - 2022.08</div>
+                <ul class="project-list">
+                    <li><strong>경기주택도시공사 3기 신도시 종합광고홍보:</strong> 대국민 관여도 개선을 위한 매스미디어 광고 송출 (공식 유튜브 조회수 약 800만), 맞춤형 '청약일정 알리미' 서비스 기획 (1개월 만에 18만 유입).</li>
+                    <li><strong>질병관리청 해외감염병 예방 홍보:</strong> '해외감염병NOW' 플랫폼 구축 및 온라인 밈('야인시대') 접목 바이럴 콘텐츠 성공.</li>
+                </ul>
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <div class="img-placeholder">[캠페인<br>이미지 1]</div>
+                    <div class="img-placeholder">[캠페인<br>이미지 2]</div>
+                </div>
+            </div>
+
+            <!-- 경력 3 -->
+            <div class="experience-card">
+                <div class="company-name">펜타컴 & 윈컴피알</div>
+                <div class="role-date">캠페인사업부 파트장 / 2014.03 - 2018.03</div>
+                <ul class="project-list">
+                    <li>농림수산식품교육문화정보원(6차산업) 종합 홍보 및 공식 채널 성장 리드</li>
+                    <li>고용노동부 청년고용정책 오프라인 투어('캠퍼스 커피트럭') 및 토크콘서트 운영 총괄</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer>
+        <p>종이책 시니어 마케터 지원자 수연</p>
+        <p>&copy; 2026 Portfolio. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
