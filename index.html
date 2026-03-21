@@ -24,6 +24,7 @@
             color: var(--text-color);
             line-height: 1.6;
             word-break: keep-all;
+            overflow-x: hidden;
         }
 
         /* 1. 첫 화면 (대문 섹션) */
@@ -34,135 +35,154 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #050505 100%);
             padding: 0 20px;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-weight: 800;
-            letter-spacing: -2px;
-        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; font-weight: 800; letter-spacing: -2px; }
+        .hero h1 span { color: var(--primary-color); }
+        .hero p { font-size: 1.2rem; max-width: 650px; color: #aaaaaa; margin-bottom: 40px; }
 
-        .hero h1 span {
-            color: var(--primary-color);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            color: #aaaaaa;
-            margin-bottom: 40px;
-        }
-
-        /* 버튼 규격 */
         .btn {
-            padding: 15px 30px;
-            background-color: var(--primary-color);
-            color: #121212;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 5px;
+            padding: 15px 30px; background-color: var(--primary-color); color: #121212;
+            text-decoration: none; font-weight: 700; border-radius: 5px;
             transition: transform 0.2s, background-color 0.2s;
         }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            background-color: #fff;
-        }
+        .btn:hover { transform: translateY(-3px); background-color: #fff; }
 
         /* 공통 섹션 규격 */
-        section {
-            padding: 100px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
+        section { padding: 100px 20px; max-width: 1100px; margin: 0 auto; }
         .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            font-weight: 700;
-            border-bottom: 3px solid var(--primary-color);
-            display: inline-block;
-            padding-bottom: 10px;
+            font-size: 2.5rem; margin-bottom: 50px; font-weight: 700;
+            border-bottom: 3px solid var(--primary-color); display: inline-block; padding-bottom: 10px;
         }
 
-        /* 2. 자기소개 섹션 */
-        .about-grid {
+        /* 자기소개 섹션 */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+
+        /* === 갤러리 뷰 포트폴리오 스타일 (노션 스타일) === */
+        .company-section { margin-bottom: 80px; }
+        .company-title {
+            font-size: 1.8rem; font-weight: 700; color: #fff; 
+            border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 30px;
+            display: flex; align-items: baseline; gap: 15px;
+        }
+        .company-meta { font-size: 1rem; color: #888; font-weight: 400; }
+
+        .portfolio-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        /* 3. 경력 기술 섹션 */
-        .timeline {
-            display: flex;
-            flex-direction: column;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 30px;
         }
 
-        .experience-card {
+        /* 썸네일 카드 디자인 */
+        .project-card {
             background-color: var(--secondary-bg);
-            padding: 40px;
             border-radius: 12px;
-            border-left: 5px solid var(--primary-color);
-            transition: transform 0.3s;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+            position: relative;
+            border: 1px solid #2a2a2a;
         }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+            border-color: #444;
+        }
+        
+        .card-thumbnail {
+            width: 100%; height: 220px;
+            background-color: #2a2a2a;
+            display: flex; align-items: center; justify-content: center;
+            color: #666; font-size: 0.9rem;
+            object-fit: cover;
+            border-bottom: 1px solid #222;
+        }
+        
+        .card-content { padding: 25px; }
+        .card-category { font-size: 0.8rem; color: var(--primary-color); text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
+        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; line-height: 1.4; color: #fff; }
+        .card-summary { font-size: 0.95rem; color: #aaa; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-        .experience-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        /* === 팝업 (모달) 창 스타일 === */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+            z-index: 1000; display: none; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
         }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        
+        .modal-container {
+            background-color: #1a1a1a;
+            width: 90%; max-width: 900px; max-height: 90vh;
+            border-radius: 16px; overflow-y: auto; overflow-x: hidden;
+            position: relative;
+            transform: translateY(30px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            border: 1px solid #333;
+        }
+        .modal-overlay.active .modal-container { transform: translateY(0); }
+        
+        /* 모달 닫기 버튼 */
+        .modal-close {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.5); border: 1px solid #444; color: white;
+            width: 40px; height: 40px; border-radius: 50%;
+            font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            z-index: 10; transition: all 0.2s; backdrop-filter: blur(4px);
+        }
+        .modal-close:hover { background: var(--primary-color); color: #000; border-color: var(--primary-color); }
+        
+        /* 모달 내부 콘텐츠 스타일 */
+        .modal-header-img { width: 100%; height: 400px; background-color: #222; background-size: cover; background-position: center; display:flex; align-items:center; justify-content:center; color:#555;}
+        
+        .modal-content-inner { padding: 50px; }
+        .modal-title { font-size: 2.5rem; margin-top: 0; margin-bottom: 25px; line-height: 1.3; font-weight: 800; word-break: keep-all; }
+        
+        .modal-meta { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+        .meta-item { background: #2a2a2a; padding: 12px 20px; border-radius: 8px; font-size: 0.95rem; border: 1px solid #333; }
+        .meta-label { color: var(--primary-color); font-size: 0.8rem; margin-bottom: 4px; display: block; font-weight: 700; text-transform: uppercase; }
+        .meta-value { color: #fff; font-weight: 500; }
+        
+        .modal-body h3 { color: var(--primary-color); font-size: 1.5rem; margin: 50px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;}
+        .modal-body h3:first-child { margin-top: 0; }
+        .modal-body p { color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem; }
+        .modal-body ul { color: #ccc; line-height: 1.8; margin-bottom: 20px; padding-left: 20px; font-size: 1.05rem; }
+        .modal-body li { margin-bottom: 10px; }
+        .modal-body img { max-width: 100%; border-radius: 12px; margin: 30px 0; border: 1px solid #333; display: block; }
+        
+        /* 임시 이미지 박스 (모달 안) */
+        
+        /* 유튜브 영상 임베드 컨테이너 */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 비율 */
+            height: 0;
+            overflow: hidden;
+            margin: 30px 0;
+            border-radius: 12px;
+            border: 1px solid #444;
+            background: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .dummy-img { width: 100%; height: 400px; background: #222; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #555; margin: 30px 0; border: 1px dashed #444; }
 
-        .company-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: var(--primary-color);
-        }
-
-        .role-date {
-            font-size: 0.9rem;
-            color: #888;
-            margin-bottom: 20px;
-        }
-
-        .project-list {
-            padding-left: 20px;
-            color: #ccc;
-        }
-
-        .project-list li {
-            margin-bottom: 10px;
-        }
-
-        /* 이미지 placeholder 박스 (추후 실제 이미지로 교체) */
-        .img-placeholder {
-            width: 100px; 
-            height: 100px; 
-            background-color: #333; 
-            border-radius: 8px; 
-            font-size: 0.8rem; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            color: #888; 
-            text-align: center;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            background-color: #0a0a0a;
-            color: #555;
-            font-size: 0.9rem;
-        }
+        footer { text-align: center; padding: 40px; background-color: #0a0a0a; color: #555; font-size: 0.9rem; border-top: 1px solid #222; }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .about-grid { grid-template-columns: 1fr; }
+            .modal-content-inner { padding: 30px 20px; }
+            .modal-title { font-size: 1.8rem; }
+            .modal-header-img { height: 250px; }
         }
     </style>
 </head>
@@ -171,8 +191,8 @@
     <!-- 첫 화면 (대문) -->
     <header class="hero">
         <h1>아이디어를 <span>실현</span>하는<br>하이브리드 마케터</h1>
-        <p>프로젝트 매니지먼트 역량과 출판 생태계에 대한 이해도로 오리지널 종이책 트래픽을 극대화합니다.</p>
-        <a href="#experience" class="btn">포트폴리오 보기</a>
+        <p>약 8년간 대규모 공공기관/정책 홍보 대행사에서 다져온 프로젝트 매니지먼트 역량과<br> 3년간 출판 마케터로서 체득한 종이책 생태계의 깊은 이해도를 바탕으로,<br>밀리의 서재 오리지널 종이책 트래픽을 극대화하는 가장 든든한 지원군이 되겠습니다.</p>
+        <a href="#experience" class="btn">포트폴리오 갤러리 보기</a>
     </header>
 
     <!-- 지원동기 & 자기소개 -->
@@ -180,70 +200,813 @@
         <h2 class="section-title">About Me</h2>
         <div class="about-grid">
             <div class="about-text">
-                <h3 style="color: var(--primary-color);">전방의 세일즈를 돕는<br>가장 강력하고 든든한 후방 지원군</h3>
+                <h3 style="color: var(--primary-color); font-size: 1.8rem; margin-bottom: 20px;">전방의 세일즈를 돕는<br>가장 강력하고 든든한 후방 지원군</h3>
                 <p>대규모 공공기관과 정책 홍보 대행사에서 프로젝트 매니저로 일하며 '대중의 마음을 움직이는 캠페인'을 기획해 왔습니다.</p>
                 <p>관습을 따르지 않고 전체적인 판을 짜는 거시적 기획력과, 외부 인플루언서 및 유관부서를 조율하는 탄탄한 커뮤니케이션 능력을 갖추었습니다. 영업 및 세일즈 부서가 서점 현장에서 자신 있게 책을 세일즈할 수 있도록 '압도적인 홍보 이슈'와 '바이럴 무기'를 쥐여드리겠습니다.</p>
             </div>
-            <!-- 내 사진 들어갈 곳 -->
-            <div style="background-color: #333; height: 350px; border-radius: 12px; display: flex; justify-content: center; align-items: center; color: #666; font-style: italic;">
-                [프로필 사진 교체 예정]
+            <div style="background-color: #222; height: 350px; border-radius: 12px; display: flex; justify-content: center; align-items: center; color: #666; font-style: italic;">
+                [수연님 프로필 사진]
             </div>
         </div>
     </section>
 
-    <!-- 주요 경력/프로젝트 -->
+    <!-- 포트폴리오 갤러리 뷰 섹션 -->
     <section id="experience">
         <h2 class="section-title">Work Experience</h2>
-        <div class="timeline">
+        
+        <!-- ================= 비즈니스북스 ================= -->
+        <div class="company-section">
+            <h3 class="company-title">비즈니스북스 <span class="company-meta">홍보팀 팀장 | 2023.06 - 현재</span></h3>
             
-            <!-- 경력 1 -->
-            <div class="experience-card">
-                <div class="company-name">비즈니스북스</div>
-                <div class="role-date">홍보팀 팀장 / 2023.06 - 현재</div>
-                <ul class="project-list">
-                    <li><strong>&lt;렛뎀 이론&gt; 런칭 오가닉 바이럴:</strong> 국내 인지도가 낮던 저자 유명세에 의존하지 않고, 시대적 메시지를 포착하여 자체 숏폼 번역/제작 및 인플루언서(미키피디아, 딤디 등) 섭외. 광고비 집행 없이 약 6,000명의 폭발적인 오가닉 노출 리드.</li>
-                    <li><strong>신규 채널(X) 적극 도입:</strong> 사내에서 회의적이었던 X(구 트위터) 채널 시딩을 밀어붙여, 현재 회사 핵심 마케팅 파이프라인으로 정착시킴.</li>
-                    <li><strong>홍보팀 조직 매니징:</strong> 잦은 인력 변동 속에서도 팀원들을 이끌며 세일즈에 흔들림 없이 기여.</li>
-                </ul>
-                <!-- 사진 넣을 빈 공간 -->
-                <div style="margin-top: 20px; display: flex; gap: 10px;">
-                    <div class="img-placeholder">[렛뎀이론<br>이미지 1]</div>
-                    <div class="img-placeholder">[렛뎀이론<br>이미지 2]</div>
+            <div class="portfolio-grid">
+                <!-- 프로젝트 1: 렛뎀 이론 -->
+                <div class="project-card" onclick="openModal('proj-let-them')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/dummy-letthem.png'); background-size: cover; background-position: center; background-color: #2a2a2a;"></div>
+                    <div class="card-content">
+                        <div class="card-category">신간 도서 런칭 홍보</div>
+                        <h4 class="card-title">&lt;렛뎀 이론&gt; 런칭 마케팅</h4>
+                        <p class="card-summary">저자 유명세가 아닌 기획 메시지를 담은 자체 숏폼 배포와 밀착형 인플루언서 섭외로 수천 명의 독자 참여 오가닉 바이럴을 달성했습니다.</p>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 2: 마침내 특이점이 온다 -->
+                <div class="project-card" onclick="openModal('proj-singularity')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/dummy-singularity.png'); background-size: cover; background-position: center; background-color: #2a2a2a;"></div>
+                    <div class="card-content">
+                        <div class="card-category">신간 도서 런칭 홍보</div>
+                        <h4 class="card-title">&lt;마침내 특이점이 온다&gt; 언론 타깃 PR</h4>
+                        <p class="card-summary">난이도 높은 과학/기술 도서의 특성에 맞게 심도 깊은 저자 서면 인터뷰를 기획하고 주요 언론 매체에 집중 노출해 전문가층을 타깃팅했습니다.</p>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 3: 공식 SNS 고도화 운영 -->
+                <div class="project-card" onclick="openModal('proj-sns')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/dummy-sns.png'); background-size: cover; background-position: center; background-color: #2a2a2a;"></div>
+                    <div class="card-content">
+                        <div class="card-category">공식 SNS 기획 및 운영</div>
+                        <h4 class="card-title">자사 공식 채널(인스타그램/X) 총괄</h4>
+                        <p class="card-summary">인스타그램 릴스 위주로 트렌드 대응력을 높이고, 새롭게 마케팅 테스트를 도입한 X(트위터) 채널을 자사 핵심 파이프라인으로 안착시켰습니다.</p>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- 경력 2 -->
-            <div class="experience-card">
-                <div class="company-name">유브레인커뮤니케이션즈</div>
-                <div class="role-date">Solution U 디렉터 / 2019.01 - 2022.08</div>
-                <ul class="project-list">
-                    <li><strong>경기주택도시공사 3기 신도시 종합광고홍보:</strong> 대국민 관여도 개선을 위한 매스미디어 광고 송출 (공식 유튜브 조회수 약 800만), 맞춤형 '청약일정 알리미' 서비스 기획 (1개월 만에 18만 유입).</li>
-                    <li><strong>질병관리청 해외감염병 예방 홍보:</strong> '해외감염병NOW' 플랫폼 구축 및 온라인 밈('야인시대') 접목 바이럴 콘텐츠 성공.</li>
-                </ul>
-                <div style="margin-top: 20px; display: flex; gap: 10px;">
-                    <div class="img-placeholder">[캠페인<br>이미지 1]</div>
-                    <div class="img-placeholder">[캠페인<br>이미지 2]</div>
+        <!-- ================= 유브레인커뮤니케이션즈 ================= -->
+        <div class="company-section">
+            <h3 class="company-title">유브레인커뮤니케이션즈 <span class="company-meta">Solution U 디렉터 | 2019.01 - 2022.08</span></h3>
+            
+            <div class="portfolio-grid">
+                <!-- 프로젝트 5: GH 기관홍보 -->
+                <div class="project-card" onclick="openModal('proj-gh')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/gh-esgcopy3.png'); background-size: cover; background-position: center;"></div>
+                    <div class="card-content">
+                        <div class="card-category">광고, 브랜딩, 온라인</div>
+                        <h4 class="card-title">GH 기관 종합 광고 홍보</h4>
+                        <p class="card-summary">기관 ESG 가치를 전하기 위한 슬로건 개발과 함께 광고를 제작하고, 기관 브랜딩을 위한 이모티콘 제작, 메타버스 공간 구축과 같은 프로모션을 진행했습니다.</p>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 3: 3기 신도시 -->
+                <div class="project-card" onclick="openModal('proj-3city')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/3city-homepage.png'); background-size: cover; background-position: center;"></div>
+                    <div class="card-content">
+                        <div class="card-category">광고, 온라인, 컨설팅</div>
+                        <h4 class="card-title">3기신도시 종합홍보</h4>
+                        <p class="card-summary">부정적인 이슈를 환기하는 영상 광고를 기획하고, 흩어진 정보를 직관적으로 응집해 접근성을 높인 통합 플랫폼을 신규 구축했습니다.</p>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 4: 해외감염병 -->
+                <div class="project-card" onclick="openModal('proj-disease')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/disease-events1.png'); background-size: cover; background-position: center;"></div>
+                    <div class="card-content">
+                        <div class="card-category">광고, 온오프라인</div>
+                        <h4 class="card-title">해외감염병 예방 캠페인</h4>
+                        <p class="card-summary">흩어져있는 해외감염병 예방 정보를 한 눈에 볼 수 있는 플랫폼 개발과 함께 밈을 활용한 광고로 인지도 확산을 도모했습니다.</p>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- 경력 3 -->
-            <div class="experience-card">
-                <div class="company-name">펜타컴 & 윈컴피알</div>
-                <div class="role-date">캠페인사업부 파트장 / 2014.03 - 2018.03</div>
-                <ul class="project-list">
-                    <li>농림수산식품교육문화정보원(6차산업) 종합 홍보 및 공식 채널 성장 리드</li>
-                    <li>고용노동부 청년고용정책 오프라인 투어('캠퍼스 커피트럭') 및 토크콘서트 운영 총괄</li>
-                </ul>
+        <!-- ================= 펜타컴 ================= -->
+        <div class="company-section">
+            <h3 class="company-title">펜타컴 <span class="company-meta">캠페인사업부 과장(파트장) | 2016.02 - 2018.03</span></h3>
+            
+            <div class="portfolio-grid">
+                <!-- 프로젝트 6: 청년고용 트럭 -->
+                <div class="project-card" onclick="openModal('proj-youth')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/youth-talk3.png'); background-size: cover; background-position: center;"></div>
+                    <div class="card-content">
+                        <div class="card-category">오프라인 이벤트 기획 및 운영</div>
+                        <h4 class="card-title">청년고용정책 종합홍보</h4>
+                        <p class="card-summary">커피트럭을 활용한 대학 순회, 토크콘서트 등 청년고용정책의 타깃 접점을 늘리는 오프라인 홍보를 진행했습니다.</p>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 7: 6차산업 -->
+                <div class="project-card" onclick="openModal('proj-6th')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/6cha-viral4.png'); background-size: cover; background-position: center;"></div>
+                    <div class="card-content">
+                        <div class="card-category">온라인 콘텐츠 제작</div>
+                        <h4 class="card-title">6차산업 종합홍보</h4>
+                        <p class="card-summary">사업의 인지도 확산을 위해 우수사례를 활용한 언론 홍보, 바이럴을 유도하는 온라인 콘텐츠를 제작했습니다.</p>
+                    </div>
+                </div>
             </div>
+        </div>
 
+        <!-- ================= 윈컴피알 ================= -->
+        <div class="company-section">
+            <h3 class="company-title">윈컴피알 <span class="company-meta">PR1팀 사원 | 2014.03 - 2015.11</span></h3>
+            
+            <div class="portfolio-grid">
+                <!-- 프로젝트 10: 경주월성 -->
+                <div class="project-card" onclick="openModal('proj-gyeongju')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/gyungju1.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="card-content">
+                        <div class="card-category">컨설팅</div>
+                        <h4 class="card-title">경주월성 발굴사업 홍보 컨설팅</h4>
+                        <p class="card-summary">문화재 발굴 사업에 대한 이해관계자들의 긍정적 공감대를 끌어내기 위한 체계적인 중장기 커뮤니케이션 채널 모델을 설계했습니다.</p>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 9: 한복진흥센터 -->
+                <div class="project-card" onclick="openModal('proj-hanbok')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/hanbok-event1.png'); background-size: cover; background-position: center;"></div>
+                    <div class="card-content">
+                        <div class="card-category">언론 홍보 지원, 온라인 홍보</div>
+                        <h4 class="card-title">한복진흥센터 기관 종합홍보</h4>
+                        <p class="card-summary">타깃을 세분화하여 초기 젊은 세대에 맞춘 감각적인 SNS 전용 콘텐츠를 발행하고 언론 대상 현장 홍보를 병행했습니다.</p>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 8: 문화역서울284 -->
+                <div class="project-card" onclick="openModal('proj-seoul284')">
+                    <div class="card-thumbnail" style="background-image: url('assets/img/munhwa1.png'); background-size: cover; background-position: center;"></div>
+                    <div class="card-content">
+                        <div class="card-category">언론 홍보 지원, 온라인 홍보</div>
+                        <h4 class="card-title">문화역서울284 기관 및 프로그램 홍보</h4>
+                        <p class="card-summary">단순 전시 안내를 넘어 공간의 역사적 가치를 조명하는 온라인 콘텐츠를 발행하고, 기관의 오프라인 행사들의 언론 홍보를 지원했습니다.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- 푸터 -->
-    <footer>
-        <p>종이책 시니어 마케터 지원자 수연</p>
-        <p>&copy; 2026 Portfolio. All rights reserved.</p>
-    </footer>
+    <!-- ========================================================= -->
+    <!-- 여기서부터는 눈에 보이지 않는 팝업(모달)의 알맹이 데이터들입니다 -->
+    <!-- ========================================================= -->
 
+    <div id="hidden-modal-data" style="display: none;">
+        
+        <!-- [데이터 1] 3기 신도시 상세 내용 -->
+        <div id="data-proj-3city">
+            <div class="modal-header-img" style="background-image: url('assets/img/3city-homepage.png'); background-size: cover; background-position: center;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">3기신도시 종합홍보</h2>
+                
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">경기주택도시공사(GH)</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2020-2021</span></div>
+                    <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">광고, 온라인, 컨설팅</span></div>
+                </div>
+                
+                <div class="modal-body">
+
+<p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>3기 신도시에 얽힌 대중의 부정적인 이슈와 인식을 환기하기 위해 영상 광고를 기획했습니다. 또한 정부 정책의 산발적인 정보들을 하나로 묶어주는 직관적인 통합 플랫폼 신규 구축을 제안해 원활한 정보 접근을 도왔습니다.</strong></p>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">✏️ 주로 했던 일</h3>
+<ul>
+<li>3기 신도시 홍보 컨설팅 진행</li>
+<li>영상 광고 제작</li>
+<li>온라인 홍보</li>
+<li>홈페이지 제작 및 관리</li>
+<li>온라인 박람회 참여</li>
+<li>언론사 유튜브 콘텐츠 기획</li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">📊 3기 신도시 홍보 전략 컨설팅</h3>
+<ul>
+<li>사전청약 등 본격적인 3기 신도시 홍보에 앞서 종합적인 홍보 전략 컨설팅 진행</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">사업환경 분석, 홍보현황 진단, 커뮤니케이션 환경 및 현황 분석, 홍보전략 및 프로그램 수립</li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">📺 3기 신도시 광고 제작</h3>
+<ul>
+<li>3기 신도시 사전청약 시행전 대국민 관심 환기를 위한 광고 제작</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">메인카피 <strong>“당신의 설렘 그 이상이 되도록”</strong> 개발 (카피라이터 협업)</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">수요자들의 진정성 있는 목소리를 담을 수 있는 테스트모니얼 스타일의 광고 제안</li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🌐 3기 신도시 홈페이지 제작 및 운영</h3>
+<ul>
+<li>무분별하게 흩어져있는 3기 신도시 정보를 한곳에서 접할 수 있는 (구)홈페이지 제작</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">홈페이지 구성 및 페이지 내 정보 배치 등 기획</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">웹개발사와 클라이언트 간 커뮤니케이션</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">모바일 접근성이 높은 반응형 홈페이지로 제작, [청약일정 알리미]를 포함하여 메뉴 구성 및 페이지 기획·제작·관리</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">홈페이지 온라인 이벤트 2회 진행</li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">👀 3기 신도시 온라인 박람회 참여</h3>
+<ul>
+<li>한국경제 집코노미 박람회 부스 참가</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">부스 내 콘텐츠 기획 및 제작(디자이너 협업)</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">부스에 함께 참여하는 지자체 담당자와의 커뮤니케이션 등 진행</li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">📹 언론사 유튜브 콘텐츠 기획</h3>
+<ul>
+<li>3기신도시 관련 머니투데이, 한국경제 등 언론사 유튜브 콘텐츠 기획</li>
+</ul>
+
+                    <h3>📸 프로젝트 갤러리</h3>
+                    <p style="text-align:center; font-size:0.9rem; color:#888;">[홍보 전략 컨설팅]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/3city-consult1.png" alt="전략 컨설팅 보고서 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/3city-consult4.png" alt="전략 컨설팅 보고서 4" style="width: 48%; margin: 10px 0;">
+                    </div>
+                    
+                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-top:30px;">[3기 신도시 TVC]</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube-nocookie.com/embed/NAozZFQlEkA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-top:30px;">[3기 신도시 홈페이지]</p>
+                    <img src="assets/img/3city-homepage.png" alt="3기신도시 홈페이지">
+                    
+                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-top:30px;">[온라인 박람회]</p>
+                    <div style="display: flex; gap: 10px;">
+                        <img src="assets/img/3city-expo1.png" alt="박람회 1" style="width: 32%; margin:0;">
+                        <img src="assets/img/3city-expo2.png" alt="박람회 2" style="width: 32%; margin:0;">
+                        <img src="assets/img/3city-expo3.png" alt="박람회 3" style="width: 32%; margin:0;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [데이터 3] GH 브랜드 상세 내용 -->
+        <div id="data-proj-gh">
+            <div class="modal-header-img" style="background-image: url('assets/img/gh-esgcopy3.png'); background-size: cover; background-color: #2a2a2a;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">GH 기관 종합 광고 홍보</h2>
+                
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">경기주택도시공사(GH)</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2021-2022</span></div>
+                    <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">광고, 브랜딩, 온라인</span></div>
+                </div>
+                
+                <div class="modal-body">
+
+<p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>경기주택도시공사(GH)의 ESG 가치와 기관 브랜딩을 대중에게 친숙하게 전하기 위해 시기별 맞춤형 전략을 기획하고, 이모티콘 및 메타버스 등 뉴미디어를 접목한 프로모션을 실행하였습니다.</strong></p>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">✏️ 주로 했던 일</h3>
+<ul>
+<li>브랜딩</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">기관 ESG 사업 관련 메인 슬로건 개발 및 이미지·바이럴 영상 제작, 온라인 이벤트 진행</li>
+<li>온라인 홍보</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">이모티콘 제작 및 배포, 메타버스 프로모션 기획·제작</li>
+</ul>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🌿 기관 ESG 사업 관련 브랜딩</h3>
+<ul>
+<li><strong>슬로건 개발 및 이미지 광고 제작</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">신문 지면광고, 온라인 배너, 기관 옥외광고 등 게재</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">카피라이터, 디자이너 간 협업</li>
+<li><strong>바이럴영상 제작(광고 제작사 협업)</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">메인카피 ‘새로운 시도, 새로운 도시’를 바탕으로 대중들에게 친근하게 접근할 수 있는 바이럴 영상 제작</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">제작사-클라이언트 간 커뮤니케이션 진행</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">바이럴영상 확산을 위한 온라인 이벤트 진행</li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🖥️ 온라인 홍보</h3>
+<ul>
+<li><strong>기관 홍보용 카카오톡 이모티콘 제작 및 배포</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">카카오 공식 협업사 컨택 및 이모티콘 제작 - 기획</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">이모티콘 배포를 위한 온라인 이벤트 진행 - 배포 웹페이지 기획</li>
+</ul>
+<ul>
+<li><strong>메타버스 프로모션 기획 및 제작</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">메타버스 플랫폼 제페토 내 GH 월드 구축</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">제페토 월드 제작 회사 선정 및 제작 기획</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">제페토 활용 이벤트 기획</li>
+</ul>
+
+                    <h3>📸 프로젝트 갤러리</h3>
+                    <p style="text-align:center; font-size:0.9rem; color:#888;">[GH 기관 브랜딩]</p>
+                    <div class="video-container" style="margin-bottom: 15px;">
+                        <iframe src="https://www.youtube-nocookie.com/embed/71u9-G_LUX0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <img src="assets/img/gh-viral.png" alt="바이럴 영상 캡처" style="margin-bottom: 15px;">
+                    
+                    <div style="display: flex; gap: 15px; align-items: stretch;">
+                        <!-- 세로형 시안 (gh-esgcopy2) -->
+                        <div style="flex: 1; display: flex;">
+                            <img src="assets/img/gh-esgcopy2.png" alt="ESG 슬로건 시안 2" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; margin: 0;">
+                        </div>
+                        <!-- 가로형 시안 위아래 배치 (gh-esgcopy, gh-esgcopy3) -->
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+                            <img src="assets/img/gh-esgcopy.png" alt="ESG 슬로건 시안 1" style="width: 100%; height: auto; border-radius: 8px; margin: 0;">
+                            <img src="assets/img/gh-esgcopy3.png" alt="ESG 슬로건 시안 3" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; margin: 0;">
+                        </div>
+                    </div>
+                    
+                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-top:30px;">[기관 홍보용 이모티콘 제작]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/gh-emoticon.png" alt="이모티콘 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/gh-emoticon2.png" alt="이모티콘 2" style="width: 48%; margin: 10px 0;">
+                    </div>
+
+                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-top:30px;">[메타버스 프로모션]</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube-nocookie.com/embed/Qp-501gFQ-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [데이터 2] 질병관리청 상세 내용 -->
+        <div id="data-proj-disease">
+            <div class="modal-header-img" style="background-image: url('assets/img/disease-events1.png'); background-size: cover; background-position: center; background-color: #2a2a2a;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">해외감염병 예방 캠페인</h2>
+                
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">질병관리청(질병관리본부)</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2019</span></div>
+                    <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">광고, 온오프라인</span></div>
+                </div>
+                
+                <div class="modal-body">
+
+<p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>흩어져 있는 감염병 예방 정보를 한눈에 볼 수 있도록 플랫폼 개발을 제안하고, 인지도가 부족했던 해외감염병에 대한 관심을 불러일으킬 밈(Meme) 활용 광고와 맞춤형 콘텐츠로 확산을 도모했습니다.</strong></p>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">✏️ 주로 했던 일</h3>
+<ul>
+<li>해외감염병 홈페이지 제작 및 운영</li>
+<li>바이럴 영상 제작</li>
+<li>오프라인 행사 진행</li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🌐 해외감염병 플랫폼 제작 및 운영</h3>
+<ul>
+<li>해외감염병 검색 플랫폼 <strong>해외감염병NOW.kr</strong> 구축</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">홈페이지 제작업체와의 커뮤니케이션</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">현재까지 2019년 당시 기획된 사이트 구성으로 운영</li>
+<li>홈페이지 기획 및 유입 유도를 위한 이벤트 기획 및 추진</li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">📹 바이럴 영상 제작</h3>
+<ul>
+<li>영상 기획 및 프로덕션과의 커뮤니케이션</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">새롭게 런칭된 홈페이지 ‘해외감염병NOW’ 각인을 방향으로 기획</li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🎇 오프라인 행사</h3>
+<ul>
+<li>토크콘서트 기획 및 업체 커뮤니케이션</li>
+<li>관련 온라인 이벤트 기획 및 진행</li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">📢 이미지 광고 기획 및 제작</h3>
+<ul>
+<li><strong>밈을 활용한 이미지광고 제작</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">야인시대 밈을 제안·활용하여 바이럴 유도</li>
+<li><strong>별도로 질병청에서 진행한 진드기매개 감염병 옥외 광고 제작</strong></li>
+<li>기타 <strong>홍보물 기획</strong></li>
+</ul>
+
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">💬 그 외 홍보 활동</h3>
+<ul>
+<li>여행박람회 등 해외감염병 관련 행사 홍보부스 참여</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">부스 벽면, 리플렛 등 콘텐츠 제작 및 부스 운영</li>
+<li>카드뉴스 제작</li>
+<li>서포터즈 운영</li>
+</ul>
+
+                    <h3>📸 프로젝트 갤러리</h3>
+                    
+                    <p style="text-align:center; font-size:0.9rem; color:#888;">[해외감염병 플랫폼]</p>
+                    <img src="assets/img/disease-homepage1.png" alt="해외감염병NOW 홈페이지">
+
+                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-top:30px;">[바이럴영상]</p>
+                    <div class="video-container" style="margin-bottom: 15px;">
+                        <iframe src="https://www.youtube-nocookie.com/embed/-vjoD1e5X3I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <img src="assets/img/disease-viral1.png" alt="밈 바이럴 커뮤니티 반응">
+
+                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-top:30px;">[오프라인 행사]</p>
+                    <div class="video-container" style="margin-bottom: 15px;">
+                        <iframe src="https://www.youtube-nocookie.com/embed/ylzHtidqiuo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/disease-events1.png" alt="행사 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/disease-events2.png" alt="행사 2" style="width: 48%; margin: 10px 0;">
+                    </div>
+
+                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-top:30px;">[이미지 광고]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/disease-meme1.png" alt="밈 광고 1" style="width: 32%; margin: 10px 0;">
+                        <img src="assets/img/disease-meme2.png" alt="밈 광고 2" style="width: 32%; margin: 10px 0;">
+                        <img src="assets/img/disease-meme3.png" alt="밈 광고 3" style="width: 32%; margin: 10px 0;">
+                    </div>
+
+                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-top:30px;">[그외 이미지 광고 및 홍보물]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/disease-image1.png" alt="홍보물 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/disease-image2.png" alt="홍보물 2" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/disease-image3.png" alt="홍보물 3" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/disease-image4.png" alt="홍보물 4" style="width: 48%; margin: 10px 0;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [데이터 4] 렛뎀 이론 -->
+        <div id="data-proj-let-them">
+            <div class="modal-header-img" style="background-image: url('assets/img/dummy-letthem.png'); background-size: cover; background-position: center; background-color: #2a2a2a;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">&lt;렛뎀 이론&gt; 런칭 마케팅</h2>
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Publisher</span><span class="meta-value">비즈니스북스</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2023-2024</span></div>
+                    <div class="meta-item"><span class="meta-label">Category</span><span class="meta-value">신간 도서 런칭 홍보</span></div>
+                </div>
+                <div class="modal-body">
+                    <p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>초기 국내 인지도가 낮은 해외 저자의 도서를 베스트셀러 진입으로 성공시키기 위해, 기획 메시지를 담은 자체 숏폼 배포와 밀착형 인플루언서 섭외를 연계하여 수천 명의 자발적인 독자 참여를 이끌어냈습니다.</strong></p>
+                    
+                    <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🚀 핵심 성과 요약</h3>
+                    <ul>
+                        <li><strong>자체 바이럴 숏폼 가공 제작:</strong> 출간 전, 저자의 강연 영상을 직접 번역하고 최신 숏폼 문법에 맞게 가공하여 오가닉 붐업 주도.</li>
+                        <li><strong>최적의 타깃 인플루언서 직접 섭외:</strong> 유튜버 '미키피디아', 힐링 브이로거 '딤디' 등을 발굴하여 무과금으로 인터뷰 및 도서 증정 기획.</li>
+                        <li><strong>독자 6,000명 이상의 오가닉 참여 달성:</strong> 광고비 없이 대규모 바이럴 챌린지를 만들어내며 베스트셀러 진입에 기여함.</li>
+                    </ul>
+
+                    <h3>📸 포트폴리오 갤러리</h3>
+                    <p style="color:#aaa; font-style:italic;">(여기에 사용할 사진 파일들을 `assets/img/` 경로에 영문 이름으로 넣어주세요)</p>
+                    <div class="dummy-img" style="height:200px;">[유튜버 미키피디아 인터뷰 영상 캡처 혹은 렛뎀 이론 도서 표지]</div>
+                    <div class="dummy-img" style="height:200px;">[브이로거 딤디 리뷰 도서 증정 댓글창 반응 등 참여형 캡처]</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [데이터 5] 마침내 특이점이 온다 -->
+        <div id="data-proj-singularity">
+            <div class="modal-header-img" style="background-image: url('assets/img/dummy-singularity.png'); background-color: #2a2a2a; background-position: center; background-size: cover;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">&lt;마침내 특이점이 온다&gt; 언론 타깃 PR</h2>
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Publisher</span><span class="meta-value">비즈니스북스</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2024</span></div>
+                    <div class="meta-item"><span class="meta-label">Category</span><span class="meta-value">신간 도서 런칭 홍보</span></div>
+                </div>
+                <div class="modal-body">
+                    <p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>난이도가 비교적 높은 과학/기술(IT) 분야 도서의 세일즈 특성에 맞게 가벼운 SNS 홍보 대신 전문가 대상 언론 PR로 방향을 잡고, 주요 언론 매체를 통해 오피니언 리더층을 효과적으로 공략했습니다.</strong></p>
+
+                    <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🌟 핵심 성과 요약</h3>
+                    <ul>
+                        <li><strong>차별화된 전략 설정:</strong> 분야 특수성을 존중하여 심도 깊은 서면 인터뷰 기획 및 배포 위주로 매체 노출 집중.</li>
+                        <li><strong>전문가 독자층 신뢰 획득:</strong> 주요 유력 매체와 언론을 통해 기사를 노출시킴으로써 책의 신뢰도 및 타깃 독자 노출도 확보.</li>
+                    </ul>
+
+                    <h3>📸 포트폴리오 갤러리</h3>
+                    <div class="dummy-img" style="height:200px;">[도서 표지 와이드 또는 언론사 인터뷰 기사 보도자료 캡처]</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- [데이터 6] 공식 SNS 기획 운영 -->
+        <div id="data-proj-sns">
+            <div class="modal-header-img" style="background-image: url('assets/img/dummy-sns.png'); background-color: #2a2a2a; background-position: center; background-size: cover;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">자사 공식 채널(인스타그램 및 X)<br>총괄 기획 운영</h2>
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Publisher</span><span class="meta-value">비즈니스북스</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2023-현재</span></div>
+                    <div class="meta-item"><span class="meta-label">Category</span><span class="meta-value">공식 SNS 기획 및 운영</span></div>
+                </div>
+                <div class="modal-body">
+                    <p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>최신 콘텐츠 포맷을 발빠르게 접목해 온드미디어(Owned Media)의 경쟁력을 강화하고, 진입장벽이 높던 마케팅 신규 채널에 과감히 도전해 자사의 가장 강력한 트래픽 파이프라인으로 안착시켰습니다.</strong></p>
+
+                    <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">📈 핵심 성과 요약</h3>
+                    <ul>
+                        <li><strong>인스타그램 숏폼 포맷 고도화:</strong> 단순 도서 알림을 넘어, 독자기 열린 호응을 보이는 인스타그램 릴스 기반의 오리지널 콘텐츠 제작 효율 개선.</li>
+                        <li><strong>X(트위터) 신규 진입 및 시딩:</strong> 내부의 기존 홍보 관습에서 벗어나, 서평(책 추천) 바이럴이 강력한 트위터 채널에 선제적 시딩 테스트 강력 추진.</li>
+                        <li><strong>사내 핵심 마케팅 채널로의 정착:</strong> 적은 예산으로도 유효 타깃을 겨냥해 높은 오가닉 공유(RT) 추이를 만들며, 현재 도서 베스트셀러를 견인하는 주요 마케팅 무기로 자리매김함.</li>
+                    </ul>
+
+                    <h3>📸 포트폴리오 갤러리</h3>
+                    <div class="dummy-img" style="height:200px;">[인스타그램 릴스 조회수 터진 화면 또는 예쁜 통일감 있는 피드 이미지]</div>
+                    <div class="dummy-img" style="height:200px;">[X(트위터) 트래픽 성공 사례 또는 팬덤 반응 캡처 이미지]</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [데이터 6] 청년고용 트럭 -->
+        <div id="data-proj-youth">
+            <div class="modal-header-img" style="background-image: url('assets/img/youth-talk3.png'); background-size: cover; background-color: #2a2a2a; background-position: center;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">청년고용정책 종합홍보</h2>
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">고용노동부</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2016</span></div>
+                    <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">오프라인 이벤트 기획 및 운영</span></div>
+                </div>
+                <div class="modal-body">
+
+<p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>고용노동부에서 추진중인 다양한 청년고용정책의 수요자 정책 체감도를 높이기 위해 다양한 대면홍보 활동을 진행했습니다. 오프라인 홍보를 중심으로 온라인에서 청년들이 정보를 접할 수 있도록 콘텐츠를 만들어 확산시켰습니다.</strong></p>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">✏️ 주로 했던 일</h3>
+<ul>
+<li>오프라인 홍보</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">커피트럭을 활용한 전국 대학 방문 프로모션</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">청년 참여 공모전, 서포터즈 진행</li>
+<li>온라인 콘텐츠 제작</li>
+</ul>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🚚 캠퍼스 커피트럭 투어</h3>
+<ul>
+<li><strong>커피트럭을 제작해 전국 대학을 방문하며 청년고용정책 홍보</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">전국 25개 학교 및 기타 행사 장소에서 개최</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">워크넷 어플리케이션 다운로드 안내, 홍보영상 상영</li>
+<li><strong>이동고용센터 부스, 찾아가는 정책설명회 및 토크콘서트 등을 함께 진행</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">각 지역의 지방고용센터와 사전 협의 및 협업</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">고용노동부 장관이 참여하는 토크콘서트 진행</li>
+</ul>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🧑‍🎓 청년 참여 서포터즈 및 공모전 진행</h3>
+<ul>
+<li><strong>청년 고용 서포터즈 운영</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">서포터즈 모집, 발대식 및 해단식 등 진행</li>
+<li><strong>PR동아리 연계 공모전 진행</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">동아리 섭외, 작품 접수, 시상식 등 진행</li>
+<li><strong>취업수기 공모전 진행</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">지방 고용센터 협업하여 수기 공모전 모집 홍보, 시상식 등 진행</li>
+<li><strong>워크넷 개선방안 아이디어 공모전</strong></li>
+</ul>
+
+                    <h3>📸 갤러리 및 아카이브</h3>
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic;">[캠퍼스 커피트럭 운영 현장]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/youth-coffee1.png" alt="커피트럭 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/youth-coffee2.png" alt="커피트럭 2" style="width: 48%; margin: 10px 0;">
+                    </div>
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic;">[장관 참여 토크콘서트 현장]</p>
+                    <img src="assets/img/youth-talk3.png" alt="청년 토크콘서트">
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic;">[서포터즈 및 공모전]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/youth-contest1.png" alt="공모전" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/youth-supporters2.png" alt="서포터즈" style="width: 48%; margin: 10px 0;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [데이터 7] 6차산업 -->
+        <div id="data-proj-6th">
+            <div class="modal-header-img" style="background-image: url('assets/img/6cha-viral4.png'); background-color: #2a2a2a; background-size: cover; background-position: center;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">6차산업 종합홍보</h2>
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">농림수산식품교육문화정보원</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2017</span></div>
+                    <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">온라인 콘텐츠 제작</span></div>
+                </div>
+                <div class="modal-body">
+
+<p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>6차산업 우수사례 발굴을 통해 6차산업 사업자의 경쟁력을 강화하고 소비자로부터 인지를 높이기위해 언론 대상 홍보활동과 함께 온오프라인 콘텐츠를 기획하고 제작했습니다.</strong></p>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">✏️ 주로 했던 일</h3>
+<ul>
+<li>전체 프로젝트 관리</li>
+<li>언론 및 온라인 콘텐츠 제작</li>
+</ul>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">📰 보도자료 작성, 기획기사 및 기고 기획</h3>
+<ul>
+<li><strong>이달의 6차산업인 보도자료 작성</strong></li>
+<li><strong>6차산업 우수 사업자 및 관계자 인터뷰 등을 활용한 기획기사 기획 및 초안 작성</strong></li>
+<li><strong>인플루언서 활용 기고 기획 및 초안 작성</strong></li>
+</ul>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🌐 온라인 콘텐츠 제작</h3>
+<ul>
+<li><strong>카드뉴스 제작</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">6차산업 SNS 게재용 카드뉴스 제작 - 보도자료 활용 등</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">여행에 미치다 협업 콘텐츠 기획</li>
+<li><strong>바이럴 영상 제작</strong></li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">트렌드에 맞춰 6차산업 사업지를 감성 여행지로 소개</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">6차산업 상품을 활용한 레시피 영상 제작</li>
+</ul>
+
+                    <h3>📸 프로젝트 갤러리</h3>
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic;">[온라인 바이럴 영상]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/6cha-viral.png" alt="바이럴 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/6cha-viral2.png" alt="바이럴 2" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/6cha-viral3.png" alt="바이럴 3" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/6cha-viral4.png" alt="바이럴 4" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/6cha-viral5.png" alt="바이럴 5" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/6cha-viral6.png" alt="바이럴 6" style="width: 48%; margin: 10px 0;">
+                    </div>
+                    
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic; margin-top:30px;">[SNS 채널 콘텐츠]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/6cha-cardnews.png" alt="카드뉴스 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/6cha-cardnews2.png" alt="카드뉴스 2" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/6cha-cardnews3.png" alt="카드뉴스 3" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/6cha-cardnews4.png" alt="카드뉴스 4" style="width: 48%; margin: 10px 0;">
+                    </div>
+
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic; margin-top:30px;">[보도자료 작성]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/6cha-news.png" alt="보도자료 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/6cha-news2.png" alt="보도자료 2" style="width: 48%; margin: 10px 0;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [데이터 8] 문화역서울284 -->
+        <div id="data-proj-seoul284">
+            <div class="modal-header-img" style="background-image: url('assets/img/munhwa1.png'); background-color: #2a2a2a; background-size: cover; background-position: center;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">문화역서울284 기관 및 프로그램 홍보</h2>
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">한국공예·디자인문화진흥원</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2014</span></div>
+                    <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">언론 홍보 지원, 온라인 홍보</span></div>
+                </div>
+                <div class="modal-body">
+
+<p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>옛 서울역을 복원하여 복합문화공간으로 재탄생한 문화역서울 284에서 진행되는 전시 및 프로그램과 기관 홍보를 맡았습니다. 블로그, 페이스북을 통해 진행되는 전시와 프로그램들을 안내하는 콘텐츠와 문화역서울284가 가진 역사적 가치를 보여주는 콘텐츠를 기획했습니다.</strong></p>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">✏️ <strong>주로 했던 일</strong></h3>
+<ul>
+<li>온라인 콘텐츠 제작</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">블로그, 페이스북 콘텐츠 제작</li>
+<li>언론홍보 지원</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">보도자료 작성, 기자간담회 진행지원, 기획기사 취재지원, 미디어 관리 등</li>
+</ul>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🖥️ 온라인 콘텐츠 제작</h3>
+<ul>
+<li>페이스북 및 블로그 콘텐츠 제작 및 운영</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">기관 및 프로그램 소개 콘텐츠 제작</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">작가 및 관객 인터뷰 콘텐츠 제작</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">역사적 사료를 활용한 기관 콘텐츠 제작</li>
+<li>파워블로거 관리</li>
+<li>페이스북 이벤트 진행</li>
+</ul>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">📰 언론홍보 지원</h3>
+<ul>
+<li>보도자료 작성 및 배포</li>
+<li>기타 언론홍보 지원</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">기획기사 및 기자 취재 지원</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">기자간담회 진행 지원</li>
+</ul>
+
+                    <h3>📸 프로젝트 갤러리</h3>
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic;">[전시/프로그램 언론 홍보 지원]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/munhwa1.png" alt="전경 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/munhwa2.png" alt="전경 2" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/munhwa3.png" alt="전경 3" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/munhwa4.png" alt="전경 4" style="width: 48%; margin: 10px 0;">
+                    </div>
+                    
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic; margin-top:30px;">[온라인 콘텐츠 제작]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/munhwa-online1.png" alt="콘텐츠 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/munhwa-online2.png" alt="콘텐츠 2" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/munhwa-online3.png" alt="콘텐츠 3" style="width: 48%; margin: 10px 0;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [데이터 9] 한복진흥센터 -->
+        <div id="data-proj-hanbok">
+            <div class="modal-header-img" style="background-image: url('assets/img/hanbok-event1.png'); background-color: #2a2a2a; background-size: cover; background-position: center;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">한복진흥센터 기관 종합홍보</h2>
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">한복진흥센터</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2015</span></div>
+                    <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">언론 홍보 지원, 온라인 홍보</span></div>
+                </div>
+                <div class="modal-body">
+
+<p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>다양한 매체를 통해 대중에게 한복의 가치를 알리고자, 개설 초기였던 블로그와 페이스북 채널의 전략을 수립했습니다. 특히 타깃을 세분화하여 젊은 세대가 공감할 수 있는 전용 콘텐츠를 기획하고 현장 언론 홍보를 수행했습니다.</strong></p>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">✏️ 주로 했던 일</h3>
+<ul>
+<li>온라인 콘텐츠 제작</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">블로그 및 페이스북 콘텐츠 제작</li>
+<li>행사 및 언론홍보 지원</li>
+</ul>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🖥️ 온라인 콘텐츠 제작</h3>
+<ul>
+<li>블로그 및 페이스북 콘텐츠 제작</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">기존의 홍보 타깃에서 젊은 세대를 타깃으로 한 콘텐츠 제안 및 제작</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">파워블로거 관리</li>
+</ul>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🎙️ 행사 및 언론 홍보 지원</h3>
+<ul>
+<li>한복의 날 기자간담회, 한복의 날 당일 행사 등 지원</li>
+</ul>
+
+                    <h3>📸 프로젝트 갤러리</h3>
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic;">[한복의 날 기자간담회 및 행사 현장]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/hanbok-event1.png" alt="행사 현장 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/hanbok-event2.png" alt="행사 현장 2" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/hanbok-event3.png" alt="행사 현장 3" style="width: 48%; margin: 10px 0;">
+                    </div>
+                    
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic; margin-top:30px;">[한복진흥센터 온라인 콘텐츠]</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/hanbok-online1.png" alt="온라인 채널 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/hanbok-online2.png" alt="온라인 채널 2" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/hanbok-online3.png" alt="온라인 채널 3" style="width: 48%; margin: 10px 0;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [데이터 10] 경주월성 -->
+        <div id="data-proj-gyeongju">
+            <div class="modal-header-img" style="background-image: url('assets/img/gyungju1.jpg'); background-color: #2a2a2a; background-size: cover; background-position: center;"></div>
+            <div class="modal-content-inner">
+                <h2 class="modal-title">경주월성 발굴사업 홍보 컨설팅</h2>
+                <div class="modal-meta">
+                    <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">국립경주문화재연구소</span></div>
+                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2015</span></div>
+                    <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">컨설팅</span></div>
+                </div>
+                <div class="modal-body">
+
+<p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>월성 발굴조사가 장기적인 발굴조사 사업으로 힘을 얻기 위해 이해관계자 및 대국민의 관심도 제고를 위한 전략적인 중·장기 홍보 전략이 필요한 시기였습니다. 이를 위해 경주 월성 발굴조사에 대 통합적이고 균형적인 중장기 홍보 전략을 수립하였습니다.</strong></p>
+<h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">✏️ 주로 했던 일</h3>
+<ul>
+<li>자료 조사</li>
+<li style="margin-left: 20px; list-style-type: circle; color: #aaa;">국내외 우수 사례, 홍보현황 등</li>
+<li>홍보 전략 도출 및 프로그램 개발</li>
+</ul>
+
+                    <h3>📸 프로젝트 갤러리</h3>
+                    <p style="text-align:center; font-size:0.9rem; color:#888; font-style:italic;">[커뮤니케이션 전략 컨설팅 보고서 및 실행 가이드]</p>
+                    <img src="assets/img/gyungju2.png" alt="초안 캡처 1">
+                    <img src="assets/img/gyungju3.png" alt="컨설팅 보고서">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <img src="assets/img/gyungju4.png" alt="보고서 내지 1" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/gyungju5.png" alt="보고서 내지 2" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/gyungju6.png" alt="보고서 내지 3" style="width: 48%; margin: 10px 0;">
+                        <img src="assets/img/gyungju7.png" alt="보고서 내지 4" style="width: 48%; margin: 10px 0;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- ========================================================= -->
+
+    <!-- 모달(팝업창)을 화면에 띄워주는 틀 (항상 숨겨져 있다가 호출 시 나타남) -->
+    <div class="modal-overlay" id="portfolio-modal" onclick="closeModal(event)">
+        <div class="modal-container" id="modal-content-box" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(event)">✕</button>
+            <div id="modal-inject-area">
+                <!-- 썸네일을 클릭하면 위의 숨겨진 데이터가 자바스크립트를 통해 이곳으로 쏙 들어옵니다 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 팝업 관련 자바스크립트 엔진 -->
+    <script>
+        // 썸네일을 클릭했을 때 모달을 띄우는 함수
+        function openModal(projectId) {
+            // 가져올 데이터 상자 찾기
+            const dataElement = document.getElementById('data-' + projectId);
+            // 보여줄 빈 상자 찾기
+            const injectArea = document.getElementById('modal-inject-area');
+            const modal = document.getElementById('portfolio-modal');
+            
+            // 데이터가 있으면(아까 HTML로 만들어뒀으면) 복사해서 화면에 띄우기
+            if (dataElement || projectId === 'proj-let-them' || !!projectId) {
+                // 테스트용 (만약 데이터가 아직 안만들어졌다면 임시 텍스트 노출)
+                injectArea.innerHTML = dataElement ? dataElement.innerHTML : document.getElementById('data-proj-6th').innerHTML;
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 팝업 떴을 때 뒤에 본문 스크롤 막기 (센스)
+            }
+        }
+        
+        // 팝업 닫기 함수
+        function closeModal(event) {
+            if(event) event.preventDefault();
+            const modal = document.getElementById('portfolio-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // 스크롤 다시 풀기
+            
+            // 창이 부드럽게 닫힌(0.3초) 후 안에 있던 내용물 삭제
+            setTimeout(() => {
+                document.getElementById('modal-inject-area').innerHTML = '';
+            }, 300);
+        }
+        
+        // 키보드 ESC 키 누르면 팝업 닫히도록 설정 (접근성)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') closeModal();
+        });
+    </script>
 </body>
 </html>
