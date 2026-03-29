@@ -109,10 +109,11 @@
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
-            z-index: 1000; display: none; justify-content: center; align-items: center;
-            opacity: 0; transition: opacity 0.3s ease;
+            z-index: 1000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
         
         .modal-container {
             background-color: #1a1a1a;
@@ -360,94 +361,6 @@
 
     <div id="hidden-modal-data" style="display: none;">
         
-        <!-- [데이터 4] 렛뎀 이론 -->
-        <div id="data-proj-let-them">
-            <div class="modal-header-img" style="background-image: url('assets/img/letthem-dimdi.png'); background-size: cover; background-position: center; background-color: #2a2a2a;"></div>
-            <div class="modal-content-inner">
-                <h2 class="modal-title">&lt;렛뎀 이론&gt; 신간 도서 런칭 홍보</h2>
-                <div class="modal-meta">
-                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2025</span></div>
-                    <div class="meta-item"><span class="meta-label">Category</span><span class="meta-value">신간 도서 런칭 홍보</span></div>
-                </div>
-                <div class="modal-body">
-                    <p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>기존 주력 타깃(40대)을 넘어 2030 세대의 정서(관계 피로도, 현생 등)를 관통하는 핵심 소구점을 발굴하여 타깃 확장을 주도하고, 진정성 있는 인플루언서 협업으로 폭발적인 성과를 이끌어냈습니다.</strong></p>
-                    
-                    <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🚀 핵심 성과 요약</h3>
-                    <ul>
-                        <li><strong>전략적 타깃 확장:</strong> 도서의 핵심 메시지(통제할 수 없는 것에 집착하지 않는 태도)가 2030의 니즈와 부합함을 간파, 과감한 타깃 확장 제안.</li>
-                        <li><strong>사전 붐업 콘텐츠 기획:</strong> 2030 세대 문법에 맞는 저자 강연 영상 번역 및 자체 숏폼 콘텐츠 가공·배포로 초기 인지도 급상승 견인.</li>
-                        <li><strong>타깃 맞춤형 인플루언서 협업:</strong> 
-                            <ul>
-                                <li><strong>일상 브이로거 '딤디(98만)':</strong> 정성적 접근(손편지 등)을 통해 영상 내 오가닉 노출 및 대규모 증정 이벤트(6,000명 참여) 달성.</li>
-                                <li><strong>교양/경제 유튜버 '미키피디아':</strong> 저자 인터뷰 기획 및 신간 배본일 맞춤 업로드로 초기 판매 화력 극대화.</li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <h3>📸 프로젝트 갤러리</h3>
-                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-bottom: 10px;">[유튜버 '딤디' 무가 도서 노출]</p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px;">
-                        <img src="assets/img/letthem-dimdi.png" alt="딤디 협업 영상 1" style="width: 48%; margin: 10px 0;">
-                        <img src="assets/img/letthem-dimdi2.png" alt="딤디 협업 영상 2" style="width: 48%; margin: 10px 0;">
-                    </div>
-                    
-                    <p style="text-align:center; font-size:0.9rem; color:#888; margin-bottom: 10px;">[유튜버 '미키피디아' 저자 인터뷰 진행]</p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <img src="assets/img/letthem-mickey.png" alt="미키피디아 인터뷰" style="width: 100%; margin: 10px 0;">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- [데이터 5] 마침내 특이점이 시작된다 -->
-        <div id="data-proj-singularity">
-            <div class="modal-header-img" style="background-image: url('assets/img/letthem-singularity.png'); background-color: #2a2a2a; background-position: center; background-size: cover;"></div>
-            <div class="modal-content-inner">
-                <h2 class="modal-title">&lt;마침내 특이점이 시작된다&gt; 신간 도서 런칭 홍보</h2>
-                <div class="modal-meta">
-                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2025</span></div>
-                    <div class="meta-item"><span class="meta-label">Category</span><span class="meta-value">신간 도서 런칭 홍보</span></div>
-                </div>
-                <div class="modal-body">
-                    <p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>난이도 높은 과학/기술(IT) 분야 도서의 세일즈 특성에 맞춰 전문가 대상 언론 PR로 방향을 잡고, 주요 언론 매체를 통해 오피니언 리더층을 효과적으로 공략했습니다.</strong></p>
-
-                    <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">🌟 핵심 성과 요약</h3>
-                    <ul>
-                        <li><strong>전문가 타깃 PR 전략:</strong> 도서의 깊이에 걸맞은 주요 일간지 및 전문 매체 대상의 저자 서면 인터뷰 기획.</li>
-                        <li><strong>주요 매체 집중 노출:</strong> 유력 매체 기사 게재를 통해 전문가 독자층의 신뢰 확보 및 베스트셀러 진입 견인.</li>
-                    </ul>
-
-                    <h3>📸 프로젝트 갤러리</h3>
-                    <img src="assets/img/letthem-singularity.png" alt="마침내 특이점이 시작된다 홍보 자료" style="width: 100%; margin: 10px 0;">
-                </div>
-            </div>
-        </div>
-        
-        <!-- [데이터 6] 공식 SNS 기획 운영 -->
-        <div id="data-proj-sns">
-            <div class="modal-header-img" style="background-image: url('assets/img/sns-instafeed.png'); background-color: #2a2a2a; background-position: center; background-size: cover;"></div>
-            <div class="modal-content-inner">
-                <h2 class="modal-title">자사 온라인 채널 기획 및 운영</h2>
-                <div class="modal-meta">
-                    <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2023-현재</span></div>
-                    <div class="meta-item"><span class="meta-label">Category</span><span class="meta-value">공식 SNS 기획 및 운영</span></div>
-                </div>
-                <div class="modal-body">
-                    <p style="color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;"><strong>데이터 기반의 지속적인 콘텐츠 최적화 테스트를 통해 채널 도달율을 관리하고, 미개척 채널이었던 X(트위터)를 자사의 주요 마케팅 파이프라인으로 안착시켰습니다.</strong></p>
-
-                    <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 15px; display: flex; align-items: center; gap: 10px;">📈 핵심 성과 요약</h3>
-                    <ul>
-                        <li><strong>인스타그램 콘텐츠 최적화 시도:</strong> 변화하는 SNS 트렌드에 맞춰 정기적으로 피드 구성을 점검하고 신규 포맷을 반복 테스트하며 최적의 운영 방향 탐색.</li>
-                        <li><strong>데이터 기반 모니터링:</strong> 유저 반응 데이터를 분석하여 메시지 전달 방식이나 포맷을 지속적으로 개선하려는 노력 경주.</li>
-                        <li><strong>X(트위터) 채널 선제적 도입:</strong> 타깃 시딩 광고 및 성과 분석을 통해 X 채널의 마케팅 유효성을 증명, 현재 자사의 핵심 마케팅 채널로 정착시킴.</li>
-                    </ul>
-
-                    <h3>📸 프로젝트 갤러리</h3>
-                    <img src="assets/img/sns-instafeed.png" alt="인스타그램 피드 운영 사례" style="width: 100%; margin: 10px 0;">
-                </div>
-            </div>
-        </div>
-
         <!-- [데이터 1] 3기 신도시 상세 내용 -->
         <div id="data-proj-3city">
             <div class="modal-header-img" style="background-image: url('assets/img/3city-homepage.png'); background-size: cover; background-position: center;"></div>
@@ -752,7 +665,7 @@
         <div id="data-proj-singularity">
             <div class="modal-header-img" style="background-image: url('assets/img/letthem-singularity.png'); background-color: #2a2a2a; background-position: center; background-size: cover;"></div>
             <div class="modal-content-inner">
-                <h2 class="modal-title">&lt;마침내 특이점이 온다&gt; 언론 타깃 PR</h2>
+                <h2 class="modal-title">&lt;마침내 특이점이 시작된다&gt; 언론 타깃 PR</h2>
                 <div class="modal-meta">
                     <div class="meta-item"><span class="meta-label">Publisher</span><span class="meta-value">비즈니스북스</span></div>
                     <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">2024</span></div>
@@ -775,7 +688,7 @@
         
         <!-- [데이터 6] 공식 SNS 기획 운영 -->
         <div id="data-proj-sns">
-            <div class="modal-header-img" style="background-image: url('assets/img/sns-instafeed.jpg'); background-color: #2a2a2a; background-position: center; background-size: cover;"></div>
+            <div class="modal-header-img" style="background-image: url('assets/img/sns-instafeed.png'); background-color: #2a2a2a; background-position: center; background-size: cover;"></div>
             <div class="modal-content-inner">
                 <h2 class="modal-title">자사 공식 채널(인스타그램 및 X)<br>총괄 기획 운영</h2>
                 <div class="modal-meta">
@@ -794,7 +707,7 @@
                     </ul>
 
                     <h3>📸 프로젝트 갤러리</h3>
-                    <img src="assets/img/sns-instafeed.jpg" alt="인스타그램 피드 운영 사례" style="width: 100%; margin: 10px 0;">
+                    <img src="assets/img/sns-instafeed.png" alt="인스타그램 피드 운영 사례" style="width: 100%; margin: 10px 0;">
                 </div>
             </div>
         </div>
@@ -1081,9 +994,8 @@
             const modal = document.getElementById('portfolio-modal');
             
             // 데이터가 있으면(아까 HTML로 만들어뒀으면) 복사해서 화면에 띄우기
-            if (dataElement || projectId === 'proj-let-them' || !!projectId) {
-                // 테스트용 (만약 데이터가 아직 안만들어졌다면 임시 텍스트 노출)
-                injectArea.innerHTML = dataElement ? dataElement.innerHTML : document.getElementById('data-proj-6th').innerHTML;
+            if (dataElement) {
+                injectArea.innerHTML = dataElement.innerHTML;
                 
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden'; // 팝업 떴을 때 뒤에 본문 스크롤 막기 (센스)
